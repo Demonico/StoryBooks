@@ -32,20 +32,25 @@ app.get('/', (req, res) => {
   res.send('It Works!');
 });
 
-// Ppassport middleware
-app.use(passport.initialize());
+app.use(cookieParser());
 app.use(passport.session({
   secret: 'secret',
   resave: false,
   saveUninitialized: false
 }));
 
+// Ppassport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Set global vars
+app.use((req, res, next) => {
+  res.locals.user = req.user || null;
+  next();
+});
+
 // Use Routes
 app.use('/auth', auth);
-
-app.use(cookieParser());
-app.use
-
 
 
 const port = process.env.PORT || 5000;
