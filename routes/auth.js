@@ -19,7 +19,7 @@ router.get('/verify', (req, res) => {
 
 router.get('/logout', (req, res) => {
   req.logout();
-  req.redirect('/');
+  res.redirect('/');
 });
 
 
