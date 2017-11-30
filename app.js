@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const exphbs = require('express-handlebars');
 const mongoose =  require('mongoose');
 const cookieParser =  require('cookie-parser');
@@ -54,11 +55,13 @@ app.use((req, res, next) => {
   next();
 });
 
+//set static folder
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Use Routes
 app.use('/', index)
 app.use('/auth', auth);
 app.use('/stories', stories);
-
 
 const port = process.env.PORT || 5000;
 

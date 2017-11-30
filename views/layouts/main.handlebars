@@ -11,15 +11,23 @@
   <!-- Font Awesome CDN -->
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/css/style.css">
+
   <title>StoryBooks</title>
 </head>
 <body>
   {{> _header}}
+  {{#if user}}
+    {{> _add-btn}}
+  {{/if}}
   <main>
     <div class="container">
       {{{body}}}
     </div>
   </main>
+  {{> _footer}}
+
   <!-- JQuery Uncompressed CDN  -->
   <script
   src="https://code.jquery.com/jquery-3.2.1.js"
@@ -37,12 +45,5 @@
       $('.button-collapse').sideNav();
     })
   </script>
-  
-
 </body>
-</html>
-
-
-
-  
-  
+</html>  
