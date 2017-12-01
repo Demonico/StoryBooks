@@ -11,7 +11,7 @@ const passport = require('passport');
 require('./models/User');
 require('./models/Story');
 
-//passport config
+// Passport Config
 require('./config/passport')(passport);
 
 // Load Routes
@@ -20,9 +20,16 @@ const auth = require('./routes/auth');
 const stories = require('./routes/stories');
 
 // Load Keys
-const keys = require('./config/keys')
+const keys = require('./config/keys');
 
-// Map global promise
+// Handlebars Helpers
+const {
+  truncate,
+  stripTags,
+  formatDate
+} = require('./helpers/hbs');
+
+// Map global promises
 mongoose.Promise = global.Promise;
 
 // Mongoose Connect
@@ -40,6 +47,11 @@ app.use(bodyParser.json())
 
 // Handlebars Middleware
 app.engine('handlebars', exphbs({
+  helpers: {
+    truncate: truncate,
+    stripTags: stripTags,
+    formatDate: formatDate
+  },
   defaultLayout:'main'
 }));
 app.set('view engine', 'handlebars');
@@ -51,7 +63,7 @@ app.use(session({
   saveUninitialized: false
 }));
 
-// Ppassport middleware
+// Passport Middleware
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -61,11 +73,11 @@ app.use((req, res, next) => {
   next();
 });
 
-//set static folder
+// Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Use Routes
-app.use('/', index)
+app.use('/', index);
 app.use('/auth', auth);
 app.use('/stories', stories);
 
