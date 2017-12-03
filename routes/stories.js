@@ -40,13 +40,13 @@ router.get('/user/:userId', (req, res) => {
   Story.find({ user: req.params.userId, status: 'public' })
     .populate('user')
     .then(stories => {
-      res.render('stories/show', {
+      res.render('stories/index', {
         stories: stories
       });
     });
 });
 
-// Logged in uer's stories
+// Logged in user's stories
 router.get('/mystories', ensureAuthenticated, (req, res) => {
   Story.find({ user: req.user.id })
     .populate('user')
@@ -74,7 +74,7 @@ router.get('/edit/:id', ensureAuthenticated, (req, res) => {
         res.render('stories/edit', {
           story: story
         });
-      };
+      }
     });
 });
 
@@ -122,7 +122,7 @@ router.put('/:id', (req, res) => {
       story.title = req.body.title;
       story.body = req.body.body;
       story.status = req.body.status;
-      story.allowComments = req.body.allowComments;
+      story.allowComments = allowComments;
 
       story.save()
         .then(story => {
@@ -157,6 +157,6 @@ router.post('/comment/:id', (req, res) => {
         .then(story => {
           res.redirect(`/stories/show/${story.id}`);
         });
-    })
+    });
 });
 module.exports = router;
